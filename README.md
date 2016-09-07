@@ -34,5 +34,5 @@ Start all of the docker containers required to run this application.
 $ docker-compose up
 ```
 
-The application is now running. Visit http://localhost:8080/sum?first=2&second=2 to see
+The application is now running. Visit http://localhost:8080/api/sum?first=2&second=2 to see
 the result of the sum service calculating `2 + 2`.
