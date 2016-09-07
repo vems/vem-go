@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: apisrv
-        image: vems/api-gateway-go:latest
+        image: vems/api-gateway-go:v1.0.1
         imagePullPolicy: Never
         ports:
         - containerPort: 8080

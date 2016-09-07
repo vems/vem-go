@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: addsrv
-        image: vems/add-service-go:latest
+        image: vems/add-service-go:v1.0.0
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
