@@ -10,6 +10,11 @@ import (
 	"golang.org/x/net/context"
 )
 
+type SumReply struct {
+	Error string `json:"error,omitempty"`
+	Data  int64  `json:"data,omitempty"`
+}
+
 func sumRequestHandler(c client, w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 
@@ -17,7 +22,12 @@ func sumRequestHandler(c client, w http.ResponseWriter, r *http.Request) {
 	secondValue := r.URL.Query().Get("second")
 
 	if firstValue == "" || secondValue == "" {
-		http.Error(w, "Please specify first / second in the query params", http.StatusBadRequest)
+		sumErrorReply := SumReply{
+			Error: "Please specify first / second in the query params",
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(sumErrorReply)
 		return
 	}
 
@@ -25,12 +35,21 @@ func sumRequestHandler(c client, w http.ResponseWriter, r *http.Request) {
 
 	addReply := <-addCh
 	if err := addReply.err; err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		sumErrorReply := SumReply{
+			Error: err.Error(),
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(sumErrorReply)
 		return
 	}
 
 	p := addReply.v
-	json.NewEncoder(w).Encode(p)
+	sumReply := SumReply{
+		Data: p,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(sumReply)
 }
 
 type sumResults struct {
