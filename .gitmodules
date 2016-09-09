@@ -4,9 +4,6 @@
 [submodule "services/add"]
 	path = services/add
 	url = https://github.com/vems/add-service-go.git
-[submodule "services/api"]
-	path = services/api
-	url = https://github.com/vems/api-gateway-go.git
 [submodule "services/proxy"]
 	path = services/proxy
 	url = https://github.com/vems/proxy.git
